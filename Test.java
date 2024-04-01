@@ -1,275 +1,171 @@
 package lab;
 
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Test {
-	public int k = 0;
+public class Test extends JFrame implements ActionListener {
+    private final JButton[][] buttons = new JButton[3][3];
+    private boolean player1Turn = true;
+    private boolean gameOver = false;
 
-	public void grid(char grid[][], int input, int flag) {
-		if (flag == 9) {
-			System.out.println("\nDraw\n");
-		} else {
-			char inp;
-			if (flag % 2 == 0) {
-				inp = 'x';
-			} else {
-				inp = 'o';
-			}
-			switch (input) {
-			case 1:
-				if (grid[0][0] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[0][0] = inp;
-					break;
-				}
-			case 2:
-				if (grid[0][1] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[0][1] = inp;
-					break;
-				}
-			case 3:
-				if (grid[0][2] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[0][2] = inp;
-					break;
-				}
-			case 4:
-				if (grid[1][0] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[1][0] = inp;
-					break;
-				}
-			case 5:
-				if (grid[1][1] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[1][1] = inp;
-					break;
-				}
-			case 6:
-				if (grid[1][2] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[1][2] = inp;
-					break;
-				}
-			case 7:
-				if (grid[2][0] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[2][0] = inp;
-					break;
-				}
-			case 8:
-				if (grid[2][1] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[2][1] = inp;
-					break;
-				}
-			case 9:
-				if (grid[2][2] != '\0') {
-					System.out.println("already exist in that place enter valid input");
-					k--;
-					break;
-				} else {
-					grid[2][2] = inp;
-					break;
-				}
-			default:
-				System.out.println("invalid input");
-			}
-		}
-		
-	}
-	void display(char[][] grid)
-	{
-		System.out.println("here's your input");
-		System.out.print(" " + grid[0][0] + " |");
-		System.out.print(" " + grid[0][1] + " | " + grid[0][2]);
-		System.out.print("\n-- ");
-		System.out.print("-- ");
-		System.out.print("-- ");
-		System.out.print("-- ");
-		System.out.print("\n " + grid[1][0] + " |");
-		System.out.print(" " + grid[1][1] + " | " + grid[1][2]);
-		System.out.print("\n-- ");
-		System.out.print("-- ");
-		System.out.print("-- ");
-		System.out.print("-- ");
-		System.out.print("\n " + grid[2][0] + " |");
-		System.out.print(" " + grid[2][1] + " | " + grid[2][2]);
-	}
+    public Test() {
+        setTitle("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 300);
+        setLayout(new GridLayout(3, 3));
 
-	public void output(char grid[][], int k) {
+        initializeButtons();
 
-		if (k == 1) {
-			if (grid[1][1] == '\0') {
-				grid[1][1] = 'o';
-			} else if (grid[0][0] == '\0') {
-				grid[0][0] = 'o';
-			} else if (grid[0][2] == '\0') {
-				grid[0][2] = 'o';
-			} else if (grid[2][0] == '\0') {
-				grid[2][0] = 'o';
-			} else if (grid[2][2] == '\0') {
-				grid[2][2] = 'o';
-			}
-		} else {
+        setVisible(true);
+    }
 
-			if (k == 3 && (grid[0][0] == 'x' && grid[2][2] == 'x') || (grid[0][2] == 'x' && grid[2][0] == 'x')) {
-				{
-					grid[0][1] = 'o';
-				}
-			} else if (grid[0][0] == 'x') {
-				if (grid[0][1] == 'x') {
-					grid[0][2] = 'o';
-				} else if (grid[0][2] == 'x') {
-					grid[0][1] = 'o';
-				} else if (grid[1][0] == 'x') {
-					grid[2][0] = 'o';
-				} else if (grid[1][1] == 'x') {
-					grid[2][2] = 'o';
-				} else if (grid[2][0] == 'x') {
-					grid[1][0] = 'o';
-				}
-			} else if (grid[0][1] == 'x') {
-				if (grid[0][2] == 'x') {
-					grid[0][0] = 'o';
-				} else if (grid[1][1] == 'x') {
-					grid[2][1] = 'o';
-				}
-			} else if (grid[0][2] == 'x') {
-				if (grid[1][1] == 'x') {
-					grid[2][0] = 'o';
-				} else if (grid[1][2] == 'x') {
-					grid[2][2] = 'o';
-				} else if (grid[2][2] == 'x') {
-					grid[1][2] = 'o';
-				}
-			} else if (grid[1][0] == 'x') {
-				if (grid[1][1] == 'x') {
-					grid[1][2] = 'o';
-				} else if (grid[2][0] == 'x') {
-					grid[0][0] = 'o';
-				}
-			} else if (grid[1][1] == 'x') {
-				if (grid[1][2] == 'x') {
-					grid[1][0] = 'o';
-				} else if (grid[2][0] == 'x') {
-					grid[0][2] = 'o';
-				} else if (grid[2][1] == 'x') {
-					grid[0][1] = 'o';
-				} else if (grid[2][2] == 'x') {
-					grid[0][0] = 'o';
-				}
-			} else if (grid[1][2] == 'x') {
-				if (grid[2][2] == 'x') {
-					grid[0][2] = 'o';
-				}
-			} else if (grid[2][0] == 'x') {
-				if (grid[2][1] == 'x') {
-					grid[2][2] = 'o';
-				} else if (grid[2][2] == 'x') {
-					grid[2][1] = 'o';
-				}
-			} else if (grid[2][1] == 'x') {
-				if (grid[2][2] == 'x') {
-					grid[2][0] = 'o';
-				}
-			}
+    private void initializeButtons() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                JButton button = new JButton("");
+                button.setFont(new Font("Arial", Font.PLAIN, 40));
+                button.addActionListener(this);
+                buttons[i][j] = button;
+                add(button);
+            }
+        }
+    }
 
-		}
+    private void computerMove() {
+        int[] bestMove = findBestMove();
+        if (bestMove[0] != -1 && bestMove[1] != -1) {
+            buttons[bestMove[0]][bestMove[1]].setText("O");
+            player1Turn = true;
+            checkGameStatus();
+        }
+    }
 
-	}
+    private int evaluate() {
+        for (int i = 0; i < 3; i++) {
+            if (buttons[i][0].getText().equals(buttons[i][1].getText()) &&
+                    buttons[i][1].getText().equals(buttons[i][2].getText())) {
+                if (buttons[i][0].getText().equals("X")) return -1;
+                else if (buttons[i][0].getText().equals("O")) return 1;
+            }
+            if (buttons[0][i].getText().equals(buttons[1][i].getText()) &&
+                    buttons[1][i].getText().equals(buttons[2][i].getText())) {
+                if (buttons[0][i].getText().equals("X")) return -1;
+                else if (buttons[0][i].getText().equals("O")) return 1;
+            }
+        }
 
-	public static void main(String[] args) {
-		Test ob1 = new Test();
-		Scanner sc = new Scanner(System.in);
-		char[][] grid = new char[3][3];
-		boolean finished = false;
-		for (ob1.k = 0; ob1.k < 10 && !finished; ob1.k++) {
-			int input = 0;
-			if (ob1.k < 9) {
-				System.out.println("\nenter the square the player wants to put sign x");
-				input = sc.nextInt();
-			} else {
-				input = 10000;
-			}
-			ob1.grid(grid, input, ob1.k);
-			ob1.display(grid);
-			
-		
-			for (int i = 0; i < 3; i++) {
-				if (grid[i][0] == grid[i][1] && grid[i][1] == grid[i][2]) {
-					if (grid[i][0] == 'x' && grid[i][0] != '\0') {
-						System.out.println("player x is winner1");
-						finished = true;
-						break;
-					} else if (grid[i][0] == 'o' && grid[i][0] != '\0') {
-						System.out.println("player 0 is winner");
-						finished = true;
-						break;
-					}
-				}
+        if (buttons[0][0].getText().equals(buttons[1][1].getText()) &&
+                buttons[1][1].getText().equals(buttons[2][2].getText())) {
+            if (buttons[0][0].getText().equals("X")) return -1;
+            else if (buttons[0][0].getText().equals("O")) return 1;
+        }
 
-			}
-			for (int i = 0; i < 3; i++) {
-				if (grid[0][i] == grid[1][i] && grid[1][i] == grid[2][i]) {
-					if (grid[0][i] == 'x' && grid[0][i] != '\0') {
-						System.out.println("player x is winner2");
-						finished = true;
-						break;
-					} else if (grid[0][i] == 'o' && grid[0][i] != '\0') {
-						System.out.println("player 0 is winner");
-						finished = true;
-						break;
-					}
-				}
-			}
+        if (buttons[0][2].getText().equals(buttons[1][1].getText()) &&
+                buttons[1][1].getText().equals(buttons[2][0].getText())) {
+            if (buttons[0][2].getText().equals("X")) return -1;
+            else if (buttons[0][2].getText().equals("O")) return 1;
+        }
 
-			if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]) {
-				if (grid[0][0] == 'x' && grid[0][0] != '\0') {
-					System.out.println("player x is winner3");
-					finished = true;
-					break;
-				} else if (grid[0][0] == 'o' && grid[0][0] != '\0') {
-					System.out.println("player 0 is winner");
-					finished = true;
-					break;
-				}
-			}
-			if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]) {
-				if (grid[0][2] == 'x' && grid[0][2] != '\0') {
-					System.out.println("player x is winner4");
-					break;
-				} else if (grid[0][2] == 'o' && grid[0][2] != '\0') {
-					System.out.println("player 0 is winner");
-					break;
-				}
-			}
-		}
-	}
+        return 0;
+    }
 
+    private int minimax(int depth, boolean isMax) {
+        int score = evaluate();
+
+        if (score == 1 || score == -1) return score;
+
+        if (!isMovesLeft()) return 0;
+
+        if (isMax) {
+            int best = Integer.MIN_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (buttons[i][j].getText().isEmpty()) {
+                        buttons[i][j].setText("O");
+                        best = Math.max(best, minimax(depth + 1, !isMax));
+                        buttons[i][j].setText("");
+                    }
+                }
+            }
+            return best;
+        } else {
+            int best = Integer.MAX_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (buttons[i][j].getText().isEmpty()) {
+                        buttons[i][j].setText("X");
+                        best = Math.min(best, minimax(depth + 1, !isMax));
+                        buttons[i][j].setText("");
+                    }
+                }
+            }
+            return best;
+        }
+    }
+
+    private int[] findBestMove() {
+        int bestVal = Integer.MIN_VALUE;
+        int[] bestMove = {-1, -1};
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (buttons[i][j].getText().isEmpty()) {
+                    buttons[i][j].setText("O");
+                    int moveVal = minimax(0, false);
+                    buttons[i][j].setText("");
+                    if (moveVal > bestVal) {
+                        bestMove[0] = i;
+                        bestMove[1] = j;
+                        bestVal = moveVal;
+                    }
+                }
+            }
+        }
+
+        return bestMove;
+    }
+
+    private boolean isMovesLeft() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (buttons[i][j].getText().isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void checkGameStatus() {
+        int score = evaluate();
+        if (score == 1) {
+            JOptionPane.showMessageDialog(this, "Computer wins!");
+            gameOver = true;
+        } else if (score == -1) {
+            JOptionPane.showMessageDialog(this, "Player wins!");
+            gameOver = true;
+        } else if (!isMovesLeft()) {
+            JOptionPane.showMessageDialog(this, "It's a draw!");
+            gameOver = true;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+        if (button.getText().isEmpty() && !gameOver) {
+            if (player1Turn) {
+                button.setText("X");
+                player1Turn = false;
+                checkGameStatus();
+                computerMove();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(Test::new);
+    }
 }
